@@ -25,6 +25,7 @@ const ChatBot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey, setApiKey] = useState("");
   const [showApiKeyInput, setShowApiKeyInput] = useState(true);
+  const [aiProvider, setAiProvider] = useState<"openai" | "gemini">("gemini");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -40,23 +41,26 @@ const ChatBot = () => {
     if (!apiKey.trim()) {
       toast({
         title: "API Key Required",
-        description: "Please enter your OpenAI API key to continue.",
+        description: `Please enter your ${aiProvider === "openai" ? "OpenAI" : "Google Gemini"} API key to continue.`,
         variant: "destructive"
       });
       return;
     }
-    localStorage.setItem("openai_api_key", apiKey);
+    localStorage.setItem(`${aiProvider}_api_key`, apiKey);
+    localStorage.setItem("ai_provider", aiProvider);
     setShowApiKeyInput(false);
     toast({
       title: "API Key Saved",
-      description: "Your OpenAI API key has been saved securely.",
+      description: `Your ${aiProvider === "openai" ? "OpenAI" : "Google Gemini"} API key has been saved securely.`,
     });
   };
 
   useEffect(() => {
-    const savedKey = localStorage.getItem("openai_api_key");
+    const savedProvider = localStorage.getItem("ai_provider") as "openai" | "gemini" || "gemini";
+    const savedKey = localStorage.getItem(`${savedProvider}_api_key`);
     if (savedKey) {
       setApiKey(savedKey);
+      setAiProvider(savedProvider);
       setShowApiKeyInput(false);
     }
   }, []);
@@ -76,48 +80,87 @@ const ChatBot = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: "gpt-4",
-          messages: [
-            {
-              role: "system",
-              content: "You are DSCPL, a spiritual AI companion. You provide biblical guidance, spiritual support, prayer assistance, devotional content, and help with accountability in faith matters. You are compassionate, wise, and rooted in Christian scripture. Always respond with love, grace, and biblical wisdom. Keep responses warm and encouraging."
-            },
-            ...messages.map(msg => ({
-              role: msg.role,
-              content: msg.content
-            })),
-            { role: "user", content: input }
-          ],
-          max_tokens: 500,
-          temperature: 0.7
-        })
-      });
+      let response, data, assistantMessage: Message;
+      
+      if (aiProvider === "openai") {
+        response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [
+              {
+                role: "system",
+                content: "You are DSCPL, a spiritual AI companion. You provide biblical guidance, spiritual support, prayer assistance, devotional content, and help with accountability in faith matters. You are compassionate, wise, and rooted in Christian scripture. Always respond with love, grace, and biblical wisdom. Keep responses warm and encouraging."
+              },
+              ...messages.map(msg => ({
+                role: msg.role,
+                content: msg.content
+              })),
+              { role: "user", content: input }
+            ],
+            max_tokens: 500,
+            temperature: 0.7
+          })
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response from OpenAI");
+        if (!response.ok) {
+          throw new Error("Failed to get response from OpenAI");
+        }
+
+        data = await response.json();
+        assistantMessage = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: data.choices[0].message.content,
+          timestamp: new Date()
+        };
+      } else {
+        // Google Gemini
+        response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `You are DSCPL, a spiritual AI companion. You provide biblical guidance, spiritual support, prayer assistance, devotional content, and help with accountability in faith matters. You are compassionate, wise, and rooted in Christian scripture. Always respond with love, grace, and biblical wisdom. Keep responses warm and encouraging.\n\nUser: ${input}`
+                  }
+                ]
+              }
+            ],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 500
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to get response from Gemini");
+        }
+
+        data = await response.json();
+        assistantMessage = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: data.candidates[0].content.parts[0].text,
+          timestamp: new Date()
+        };
       }
-
-      const data = await response.json();
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: data.choices[0].message.content,
-        timestamp: new Date()
-      };
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Error:", error);
       toast({
         title: "Error",
-        description: "Failed to send message. Please check your API key and try again.",
+        description: `Failed to send message. Please check your ${aiProvider === "openai" ? "OpenAI" : "Google Gemini"} API key and try again.`,
         variant: "destructive"
       });
     } finally {
@@ -140,20 +183,31 @@ const ChatBot = () => {
             <Settings className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold mb-2">Setup Required</h3>
-            <p className="text-muted-foreground">
-              Please enter your OpenAI API key to enable the spiritual AI companion.
+            <h3 className="text-xl font-semibold mb-2">Setup Required</h3>
+            <p className="text-muted-foreground text-sm">
+              Choose your AI provider and enter your API key to enable the spiritual AI companion.
             </p>
           </div>
           <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">AI Provider</label>
+              <select 
+                value={aiProvider} 
+                onChange={(e) => setAiProvider(e.target.value as "openai" | "gemini")}
+                className="w-full p-2 border border-border rounded-md bg-background text-foreground text-sm"
+              >
+                <option value="gemini">Google Gemini (Recommended)</option>
+                <option value="openai">OpenAI GPT-4</option>
+              </select>
+            </div>
             <Input
               type="password"
-              placeholder="Enter your OpenAI API key"
+              placeholder={`Enter your ${aiProvider === "openai" ? "OpenAI" : "Google Gemini"} API key`}
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              className="w-full"
+              className="w-full text-sm"
             />
-            <Button onClick={saveApiKey} className="btn-divine w-full">
+            <Button onClick={saveApiKey} className="btn-divine w-full text-sm">
               Save API Key
             </Button>
           </div>

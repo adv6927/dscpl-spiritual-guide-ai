@@ -18,6 +18,18 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+			},
+			fontSize: {
+				'xs': ['0.75rem', { lineHeight: '1rem' }],
+				'sm': ['0.8rem', { lineHeight: '1.1rem' }],
+				'base': ['0.85rem', { lineHeight: '1.2rem' }],
+				'lg': ['0.9rem', { lineHeight: '1.3rem' }],
+				'xl': ['1rem', { lineHeight: '1.4rem' }],
+				'2xl': ['1.1rem', { lineHeight: '1.5rem' }],
+				'3xl': ['1.2rem', { lineHeight: '1.6rem' }],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
