@@ -3,11 +3,26 @@ import { Book, HandHeart, Brain, Shield, MessageCircle, Sparkles } from "lucide-
 import FeatureCard from "./FeatureCard";
 import ChatBot from "./ChatBot";
 import ThemeToggle from "./ThemeToggle";
+import TransitionLoader from "./TransitionLoader";
 
 type ViewType = "dashboard" | "devotion" | "prayer" | "meditation" | "accountability" | "chat";
 
 const MainDashboard = () => {
   const [currentView, setCurrentView] = useState<ViewType>("dashboard");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [nextView, setNextView] = useState<ViewType>("dashboard");
+
+  const handleViewChange = (newView: ViewType) => {
+    if (newView !== currentView) {
+      setNextView(newView);
+      setIsTransitioning(true);
+    }
+  };
+
+  const handleTransitionComplete = () => {
+    setCurrentView(nextView);
+    setIsTransitioning(false);
+  };
 
   const features = [
     {
@@ -57,7 +72,7 @@ const MainDashboard = () => {
             <h2 className="text-2xl font-bold mb-4">Daily Devotion</h2>
             <p className="text-muted-foreground mb-6">Coming soon! Choose topics like stress, fear, relationships, and more.</p>
             <button 
-              onClick={() => setCurrentView("dashboard")} 
+              onClick={() => handleViewChange("dashboard")} 
               className="btn-divine px-6 py-2 rounded-lg text-white"
             >
               Back to Dashboard
@@ -70,7 +85,7 @@ const MainDashboard = () => {
             <h2 className="text-2xl font-bold mb-4">Daily Prayer</h2>
             <p className="text-muted-foreground mb-6">Coming soon! Guided prayer sessions with personal growth focus.</p>
             <button 
-              onClick={() => setCurrentView("dashboard")} 
+              onClick={() => handleViewChange("dashboard")} 
               className="btn-divine px-6 py-2 rounded-lg text-white"
             >
               Back to Dashboard
@@ -83,7 +98,7 @@ const MainDashboard = () => {
             <h2 className="text-2xl font-bold mb-4">Daily Meditation</h2>
             <p className="text-muted-foreground mb-6">Coming soon! Scripture-focused meditation with breathing guides.</p>
             <button 
-              onClick={() => setCurrentView("dashboard")} 
+              onClick={() => handleViewChange("dashboard")} 
               className="btn-divine px-6 py-2 rounded-lg text-white"
             >
               Back to Dashboard
@@ -96,7 +111,7 @@ const MainDashboard = () => {
             <h2 className="text-2xl font-bold mb-4">Daily Accountability</h2>
             <p className="text-muted-foreground mb-6">Coming soon! Spiritual strength for overcoming challenges.</p>
             <button 
-              onClick={() => setCurrentView("dashboard")} 
+              onClick={() => handleViewChange("dashboard")} 
               className="btn-divine px-6 py-2 rounded-lg text-white"
             >
               Back to Dashboard
@@ -128,7 +143,7 @@ const MainDashboard = () => {
                   title={feature.title}
                   description={feature.description}
                   icon={feature.icon}
-                  onClick={() => setCurrentView(feature.id)}
+                  onClick={() => handleViewChange(feature.id)}
                   gradient={feature.gradient}
                 />
               ))}
@@ -149,13 +164,19 @@ const MainDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Transition Loader */}
+      <TransitionLoader 
+        isVisible={isTransitioning} 
+        onComplete={handleTransitionComplete} 
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             {currentView !== "dashboard" && (
               <button
-                onClick={() => setCurrentView("dashboard")}
+                onClick={() => handleViewChange("dashboard")}
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 ← Back
