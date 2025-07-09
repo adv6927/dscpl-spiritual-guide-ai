@@ -63,6 +63,21 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
+			backgroundImage: {
+				'gradient-spiritual': 'var(--gradient-spiritual)',
+				'gradient-divine': 'var(--gradient-divine)',
+				'gradient-peaceful': 'var(--gradient-peaceful)',
+				'gradient-glow': 'var(--gradient-glow)'
+			},
+			boxShadow: {
+				'divine': 'var(--shadow-divine)',
+				'peaceful': 'var(--shadow-peaceful)',
+				'glow': 'var(--shadow-glow)'
+			},
+			transitionTimingFunction: {
+				'divine': 'var(--transition-divine)',
+				'peaceful': 'var(--transition-peaceful)'
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',

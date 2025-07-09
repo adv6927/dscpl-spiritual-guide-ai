@@ -2,41 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* DSCPL Spiritual AI Companion Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Spiritual Light Mode Palette */
+    --background: 45 100% 98%;
+    --foreground: 240 10% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 240 10% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 240 10% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 261 100% 65%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 195 100% 85%;
+    --secondary-foreground: 240 10% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 45 100% 95%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 100% 88%;
+    --accent-foreground: 240 10% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 45 50% 90%;
+    --input: 45 50% 90%;
+    --ring: 261 100% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Spiritual Gradient System */
+    --gradient-spiritual: linear-gradient(135deg, hsl(261 100% 65%), hsl(195 100% 70%));
+    --gradient-divine: linear-gradient(135deg, hsl(45 100% 75%), hsl(261 100% 80%));
+    --gradient-peaceful: linear-gradient(180deg, hsl(195 100% 85%), hsl(45 100% 90%));
+    --gradient-glow: linear-gradient(135deg, hsl(261 100% 65% / 0.1), hsl(195 100% 70% / 0.1));
+
+    /* Sacred Shadows */
+    --shadow-divine: 0 10px 40px hsl(261 100% 65% / 0.15);
+    --shadow-peaceful: 0 4px 20px hsl(195 100% 70% / 0.1);
+    --shadow-glow: 0 0 30px hsl(261 100% 65% / 0.2);
+
+    /* Animation Curves */
+    --transition-divine: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-peaceful: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +70,45 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Spiritual Dark Mode Palette */
+    --background: 240 10% 8%;
+    --foreground: 45 100% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 240 10% 12%;
+    --card-foreground: 45 100% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 10% 12%;
+    --popover-foreground: 45 100% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 195 100% 70%;
+    --primary-foreground: 240 10% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 10% 18%;
+    --secondary-foreground: 45 100% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 261 100% 65%;
+    --accent-foreground: 45 100% 95%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 100% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 240 10% 20%;
+    --input: 240 10% 18%;
+    --ring: 195 100% 70%;
+
+    /* Dark Mode Gradients */
+    --gradient-spiritual: linear-gradient(135deg, hsl(261 100% 65%), hsl(195 100% 70%));
+    --gradient-divine: linear-gradient(135deg, hsl(195 100% 70%), hsl(261 100% 65%));
+    --gradient-peaceful: linear-gradient(180deg, hsl(240 10% 12%), hsl(240 10% 18%));
+    --gradient-glow: linear-gradient(135deg, hsl(261 100% 65% / 0.2), hsl(195 100% 70% / 0.2));
+
+    /* Dark Mode Shadows */
+    --shadow-divine: 0 10px 40px hsl(261 100% 65% / 0.3);
+    --shadow-peaceful: 0 4px 20px hsl(195 100% 70% / 0.2);
+    --shadow-glow: 0 0 30px hsl(261 100% 65% / 0.4);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -94,6 +120,8 @@ All colors MUST be HSL.
   }
 }
 
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -101,5 +129,292 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Pyramid Loader - Dark Mode */
+  .pyramid-loader {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: block;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg);
+  }
+
+  .wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+
+  .pyramid-loader .wrapper .side {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform-origin: center top;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  .pyramid-loader .wrapper .side1 {
+    transform: rotateZ(-30deg) rotateY(90deg);
+    background: conic-gradient(#2BDEAC, #F028FD, #D8CCE6, #2F2585);
+  }
+
+  .pyramid-loader .wrapper .side2 {
+    transform: rotateZ(30deg) rotateY(90deg);
+    background: conic-gradient(#2F2585, #D8CCE6, #F028FD, #2BDEAC);
+  }
+
+  .pyramid-loader .wrapper .side3 {
+    transform: rotateX(30deg);
+    background: conic-gradient(#2F2585, #D8CCE6, #F028FD, #2BDEAC);
+  }
+
+  .pyramid-loader .wrapper .side4 {
+    transform: rotateX(-30deg);
+    background: conic-gradient(#2BDEAC, #F028FD, #D8CCE6, #2F2585);
+  }
+
+  .pyramid-loader .wrapper .shadow {
+    width: 60px;
+    height: 60px;
+    background: #8B5AD5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform: rotateX(90deg) translateZ(-40px);
+    filter: blur(12px);
+  }
+
+  /* Pyramid Loader - Light Mode */
+  .pyramid-loader-light {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: block;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg);
+  }
+
+  .pyramid-loader-light .wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: spin 6s linear infinite;
+  }
+
+  .pyramid-loader-light .wrapper .side {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform-origin: center top;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.5);
+  }
+
+  .pyramid-loader-light .wrapper .side1 {
+    transform: rotateZ(-30deg) rotateY(90deg);
+    background: conic-gradient(#ff6d70, #ff6d70, #ffe600, #ffe600);
+  }
+
+  .pyramid-loader-light .wrapper .side2 {
+    transform: rotateZ(30deg) rotateY(90deg);
+    background: conic-gradient(#ffe600, #ffe600, #6cffd6, #6cffd6);
+  }
+
+  .pyramid-loader-light .wrapper .side3 {
+    transform: rotateX(30deg);
+    background: conic-gradient(#6cffd6, #6cffd6, #ff6d70, #ff6d70);
+  }
+
+  .pyramid-loader-light .wrapper .side4 {
+    transform: rotateX(-30deg);
+    background: conic-gradient(#ff6d70, #ff6d70, #ffe600, #ffe600);
+  }
+
+  .pyramid-loader-light .wrapper .shadow {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(rgba(255, 99, 71, 0.8), rgba(255, 99, 71, 0.4));
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform: rotateX(90deg) translateZ(-40px);
+    filter: blur(8px);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 99, 71, 0.8);
+  }
+
+  /* Neo Toggle Component */
+  .neo-toggle-container {
+    --toggle-width: 80px;
+    --toggle-height: 38px;
+    --toggle-bg: #181c20;
+    --toggle-off-color: #475057;
+    --toggle-on-color: #36f9c7;
+    --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    user-select: none;
+  }
+
+  .neo-toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .neo-toggle {
+    position: relative;
+    width: var(--toggle-width);
+    height: var(--toggle-height);
+    display: block;
+    cursor: pointer;
+    transform: translateZ(0);
+    perspective: 500px;
+  }
+
+  .neo-track {
+    position: absolute;
+    inset: 0;
+    border-radius: calc(var(--toggle-height) / 2);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transform: translateZ(-1px);
+    transition: transform var(--toggle-transition);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .neo-background-layer {
+    position: absolute;
+    inset: 0;
+    background: var(--toggle-bg);
+    background-image: linear-gradient(-45deg, rgba(20, 20, 20, 0.8) 0%, rgba(30, 30, 30, 0.3) 50%, rgba(20, 20, 20, 0.8) 100%);
+    opacity: 1;
+    transition: all var(--toggle-transition);
+  }
+
+  .neo-thumb {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transform-style: preserve-3d;
+    transition: transform var(--toggle-transition);
+    z-index: 1;
+  }
+
+  .neo-thumb-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--toggle-off-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all var(--toggle-transition);
+  }
+
+  .neo-toggle-input:checked + .neo-toggle .neo-thumb {
+    transform: translateX(calc(var(--toggle-width) - 38px));
+  }
+
+  .neo-toggle-input:checked + .neo-toggle .neo-thumb-ring {
+    background-color: var(--toggle-on-color);
+    border-color: rgba(54, 249, 199, 0.3);
+    box-shadow: 0 0 15px rgba(54, 249, 199, 0.5);
+  }
+
+  /* Divine Button Variants */
+  .btn-divine {
+    background: var(--gradient-spiritual);
+    box-shadow: var(--shadow-divine);
+    transition: var(--transition-divine);
+  }
+
+  .btn-divine:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-peaceful {
+    background: var(--gradient-peaceful);
+    box-shadow: var(--shadow-peaceful);
+    transition: var(--transition-peaceful);
+  }
+
+  .btn-sacred {
+    background: var(--gradient-divine);
+    border: 1px solid hsl(var(--accent));
+    backdrop-filter: blur(10px);
+  }
+
+  /* Sacred Card Styles */
+  .card-divine {
+    background: var(--gradient-glow);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.2);
+    box-shadow: var(--shadow-peaceful);
+    transition: var(--transition-divine);
+  }
+
+  .card-divine:hover {
+    box-shadow: var(--shadow-divine);
+    transform: translateY(-4px);
+  }
+
+  /* Spiritual Animations */
+  @keyframes divine-glow {
+    0%, 100% { box-shadow: var(--shadow-peaceful); }
+    50% { box-shadow: var(--shadow-glow); }
+  }
+
+  @keyframes peaceful-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .animate-divine-glow {
+    animation: divine-glow 3s ease-in-out infinite;
+  }
+
+  .animate-peaceful-float {
+    animation: peaceful-float 4s ease-in-out infinite;
   }
 }
